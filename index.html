@@ -400,7 +400,7 @@
         <span class="wordmark">How to raise capital</span>
         ${progress(1, 2)}
         <h1 class="q-title">What stage is your company?</h1>
-        <p class="q-sub">Be honest — there's no wrong answer. This helps us point you to the right type of capital.</p>
+        <p class="q-sub">Be honest. There's no wrong answer. This helps us point you to the right type of capital.</p>
         <div class="options">
           <button class="opt-btn" onclick="pick('stage','idea')">
             <div class="opt-icon"></div>
@@ -420,7 +420,7 @@
             <div class="opt-icon"></div>
             <span>
               <span class="opt-label">Product with revenue</span>
-              <span class="opt-desc">Customers are paying you — even if it's early</span>
+              <span class="opt-desc">Customers are paying you even if it's early</span>
             </span>
           </button>
         </div>`;
@@ -443,14 +443,14 @@
             <div class="opt-icon"></div>
             <span>
               <span class="opt-label">No, I want to build long-term</span>
-              <span class="opt-desc">I'm not planning to sell — lifestyle or legacy business</span>
+              <span class="opt-desc">I'm not planning to sell. Lifestyle or legacy business</span>
             </span>
           </button>
           <button class="opt-btn" onclick="pick('exit','unsure')">
             <div class="opt-icon"></div>
             <span>
               <span class="opt-label">Not sure yet</span>
-              <span class="opt-desc">I haven't decided — show me all my options</span>
+              <span class="opt-desc">I haven't decided. Show me all my options</span>
             </span>
           </button>
         </div>`;
@@ -477,7 +477,7 @@
     const showInvestors = exit === 'yes' || exit === 'unsure';
     const showCollateral = stage === 'revenue' || (stage !== 'idea' && (exit === 'no' || exit === 'unsure'));
     const showCollateralIdea = stage === 'idea' && exit === 'no';
-    const stageLabel = stage === 'idea' ? 'Idea stage' : stage === 'prerevenue' ? 'Pre-revenue product' : 'Revenue-generating product';
+    const stageLabel = stage === 'idea' ? 'Idea stage' : stage === 'prerevenue' ? 'Pre revenue product' : 'Revenue generating product';
     const exitLabel = exit === 'yes' ? 'Planning an exit' : exit === 'no' ? 'Not planning an exit' : 'Undecided on exit';
 
     let cards = '';
@@ -489,10 +489,10 @@
           <span class="res-title">Personal network</span>
           <span class="res-badge" style="background:var(--purple-light); color:var(--purple);">Start here</span>
         </div>
-        <p class="res-body">Before approaching anyone else, tap your inner circle. Friends and family who believe in you are often the first to help — with funding, introductions, or support.</p>
+        <p class="res-body">Before approaching anyone else, tap your inner circle. Friends and family who believe in you are often the first to help with funding, introductions, or support.</p>
         <div class="res-items">
           <div class="res-item"><div class="res-dot" style="background:var(--purple)"></div>Make a list of people in your network who might invest or connect you to others</div>
-          <div class="res-item"><div class="res-dot" style="background:var(--purple)"></div>Most professional investors want to see some sign of life first — your network can help you get there</div>
+          <div class="res-item"><div class="res-dot" style="background:var(--purple)"></div>Most professional investors want to see some sign of life first. Your network can help you get there</div>
         </div>
       </div>`;
 
@@ -503,7 +503,7 @@
           <span class="res-title">Non-dilutive capital</span>
           <span class="res-badge" style="background:var(--green-light); color:var(--green);">No equity given up</span>
         </div>
-        <p class="res-body">Free money that doesn't cost you any ownership. Grants and competitions are globally available — the key is finding the right ones for your industry, location, and stage.</p>
+        <p class="res-body">Free money that doesn't cost you any ownership. Grants and competitions are globally available. The key is finding the right ones for your industry, location, and stage.</p>
         <div class="res-items">
           <div class="res-item"><div class="res-dot" style="background:var(--green)"></div><span><strong>Grants</strong> — nearly $15B is awarded annually in non-dilutive grants</span></div>
           <div class="res-item"><div class="res-dot" style="background:var(--green)"></div><span><strong>Competitions</strong> — nearly $800M given away each year through pitch competitions</span></div>
@@ -572,7 +572,7 @@
     }
 
     if (exit === 'no' && stage !== 'revenue') {
-      cards = `<div class="info-box">ℹ️ <span>Since you're not planning an exit, professional investors aren't the right fit — they need a return. Focus on grants, competitions, and collateral-based options as you grow.</span></div>` + cards;
+      cards = `<div class="info-box">ℹ️ <span>Since you're not planning an exit, professional investors aren't the right fit. They need a financial return. Focus on grants, competitions, and collateral-based options as you grow.</span></div>` + cards;
     }
 
     return `
