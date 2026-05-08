@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find the Right Funding — Startup Capital Diagnostic</title>
+  <meta name="description" content="Answer two questions and find out which type of capital is right for your startup stage." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #040430;
+      --surface: #0e0e50;
+      --border: rgba(255,255,255,0.13);
+      --border-strong: rgba(255,255,255,0.22);
+      --text-primary: #f5f5f5;
+      --text-secondary: #b8b8cc;
+      --text-hint: #7a7a9a;
+      --accent: #6e8ef5;
+      --accent-light: rgba(110,142,245,0.15);
+      --green: #3ecfa0;
+      --green-light: rgba(62,207,160,0.13);
+      --coral: #f07a5a;
+      --coral-light: rgba(240,122,90,0.13);
+      --purple: #a98af5;
+      --purple-light: rgba(169,138,245,0.13);
+      --gray-light: rgba(255,255,255,0.07);
+      --gold: #99902c;
+      --gold-bright: #c8b840;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 2.5rem 1.5rem 4rem;
+    }
+
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .wordmark {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      display: block;
+      line-height: 1.1;
+    }
+
+    .progress-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 2rem;
+      align-items: center;
+    }
+
+    .progress-seg {
+      height: 4px;
+      flex: 1;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.1);
+      transition: background 0.4s ease;
+    }
+
+    .progress-seg.on { background: var(--gold); }
+
+    .progress-count {
+      font-size: 12px;
+      color: var(--text-hint);
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      margin-left: 4px;
+    }
+
+    .q-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 400;
+      font-size: 30px;
+      line-height: 1.2;
+      color: var(--text-primary);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .q-sub {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+
+    .options { display: flex; flex-direction: column; gap: 10px; }
+
+    .opt-btn {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-left: 3px solid transparent;
+      border-radius: 14px;
+      padding: 16px 18px;
+      cursor: pointer;
+      text-align: left;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+      width: 100%;
+    }
+
+    .opt-btn:hover {
+      border-color: var(--border-strong);
+      border-left-color: var(--gold);
+      background: rgba(153,144,44,0.08);
+      transform: translateY(-1px);
+    }
+
+    .opt-btn:active { transform: translateY(0); }
+
+    .opt-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 19px;
+      flex-shrink: 0;
+    }
+
+    .opt-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .opt-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      display: block;
+      line-height: 1.4;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--text-hint);
+      padding: 0;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-bottom: 1.5rem;
+      font-family: 'DM Sans', sans-serif;
+      transition: color 0.15s;
+    }
+
+    .back-btn:hover { color: var(--text-primary); }
+
+    .results-eyebrow {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gold-bright);
+      margin-bottom: 0.4rem;
+    }
+
+    .results-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 26px;
+      line-height: 1.25;
+      margin-bottom: 0.4rem;
+      color: var(--text-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .results-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .res-card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 1.4rem;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .res-card.muted { opacity: 0.45; }
+
+    .res-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .res-icon {
+      width: 42px; height: 42px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .res-title {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+    }
+
+    .res-badge {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+
+    .res-body {
+      font-size: 13.5px;
+      color: var(--text-secondary);
+      line-height: 1.65;
+      margin-bottom: 12px;
+    }
+
+    .res-items { display: flex; flex-direction: column; gap: 8px; }
+
+    .res-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .res-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 7px;
+    }
+
+    .warning-box {
+      display: flex;
+      gap: 8px;
+      background: rgba(153,144,44,0.12);
+      border: 1px solid rgba(153,144,44,0.25);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: var(--gold-bright);
+      line-height: 1.5;
+    }
+
+    .info-box {
+      display: flex;
+      gap: 8px;
+      background: var(--gray-light);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .cta-block {
+      background: var(--gold);
+      border-radius: 16px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 1.5rem;
+    }
+
+    .cta-title {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 20px;
+      color: #040430;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .cta-sub {
+      font-size: 13px;
+      color: rgba(4,4,48,0.72);
+      margin-bottom: 1.25rem;
+      line-height: 1.55;
+    }
+
+    .cta-btn {
+      display: inline-block;
+      background: #040430;
+      color: var(--gold-bright);
+      border-radius: 10px;
+      padding: 11px 26px;
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: opacity 0.15s;
+    }
+
+    .cta-btn:hover { opacity: 0.85; }
+
+    .restart-btn {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--text-hint);
+      cursor: pointer;
+      display: block;
+      margin: 1rem auto 0;
+      font-family: 'DM Sans', sans-serif;
+      transition: color 0.15s, border-color 0.15s;
+    }
+
+    .restart-btn:hover { color: var(--text-primary); border-color: var(--border-strong); }
+
+    footer {
+      text-align: center;
+      padding: 1.5rem;
+      font-size: 12px;
+      color: var(--text-hint);
+    }
+
+    @media (max-width: 480px) {
+      .card { padding: 1.75rem 1.25rem; }
+      .wordmark { font-size: 28px; }
+      .q-title { font-size: 22px; }
+      .results-title { font-size: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<main>
+  <div class="card">
+    <div id="app"></div>
+  </div>
+</main>
+
+<footer>Built for first-time founders.</footer>
+
+<script>
+  const state = { step: 1, stage: null, exit: null };
+
+  function progress(current, total) {
+    let html = '<div class="progress-row">';
+    for (let i = 1; i <= total; i++) {
+      html += `<div class="progress-seg ${i <= current ? 'on' : ''}"></div>`;
+    }
+    html += `<span class="progress-count">${current} / ${total}</span>`;
+    return html + '</div>';
+  }
+
+  function render() {
+    const app = document.getElementById('app');
+    if (state.step === 1) {
+      app.innerHTML = `
+        <span class="wordmark">How to raise capital</span>
+        ${progress(1, 2)}
+        <h1 class="q-title">What stage is your company?</h1>
+        <p class="q-sub">Be honest — there's no wrong answer. This helps us point you to the right type of capital.</p>
+        <div class="options">
+          <button class="opt-btn" onclick="pick('stage','idea')">
+            <div class="opt-icon">💡</div>
+            <span>
+              <span class="opt-label">Idea stage</span>
+              <span class="opt-desc">You have a concept but haven't built a product yet</span>
+            </span>
+          </button>
+          <button class="opt-btn" onclick="pick('stage','prerevenue')">
+            <div class="opt-icon">🚀</div>
+            <span>
+              <span class="opt-label">Product, but pre-revenue</span>
+              <span class="opt-desc">You've built something but haven't made money from it yet</span>
+            </span>
+          </button>
+          <button class="opt-btn" onclick="pick('stage','revenue')">
+            <div class="opt-icon">📈</div>
+            <span>
+              <span class="opt-label">Product with revenue</span>
+              <span class="opt-desc">Customers are paying you — even if it's early</span>
+            </span>
+          </button>
+        </div>`;
+    } else if (state.step === 2) {
+      app.innerHTML = `
+        <span class="wordmark">How to raise capital</span>
+        ${progress(2, 2)}
+        <button class="back-btn" onclick="back()">← Back</button>
+        <h1 class="q-title">Do you plan to exit?</h1>
+        <p class="q-sub">An exit means selling your company or going public (IPO). This determines whether professional investors are a fit for you.</p>
+        <div class="options">
+          <button class="opt-btn" onclick="pick('exit','yes')">
+            <div class="opt-icon">🎯</div>
+            <span>
+              <span class="opt-label">Yes, I plan to exit</span>
+              <span class="opt-desc">Acquisition or IPO is part of my plan</span>
+            </span>
+          </button>
+          <button class="opt-btn" onclick="pick('exit','no')">
+            <div class="opt-icon">🏡</div>
+            <span>
+              <span class="opt-label">No, I want to build long-term</span>
+              <span class="opt-desc">I'm not planning to sell — lifestyle or legacy business</span>
+            </span>
+          </button>
+          <button class="opt-btn" onclick="pick('exit','unsure')">
+            <div class="opt-icon">🤔</div>
+            <span>
+              <span class="opt-label">Not sure yet</span>
+              <span class="opt-desc">I haven't decided — show me all my options</span>
+            </span>
+          </button>
+        </div>`;
+    } else if (state.step === 'results') {
+      app.innerHTML = buildResults();
+    }
+  }
+
+  function pick(key, val) {
+    state[key] = val;
+    if (key === 'stage') state.step = 2;
+    else if (key === 'exit') state.step = 'results';
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function back() {
+    state.step = 1;
+    render();
+  }
+
+  function buildResults() {
+    const { stage, exit } = state;
+    const showInvestors = exit === 'yes' || exit === 'unsure';
+    const showCollateral = stage === 'revenue' || (stage !== 'idea' && (exit === 'no' || exit === 'unsure'));
+    const showCollateralIdea = stage === 'idea' && exit === 'no';
+    const stageLabel = stage === 'idea' ? 'Idea stage' : stage === 'prerevenue' ? 'Pre-revenue product' : 'Revenue-generating product';
+    const exitLabel = exit === 'yes' ? 'Planning an exit' : exit === 'no' ? 'Not planning an exit' : 'Undecided on exit';
+
+    let cards = '';
+
+    cards += `
+      <div class="res-card">
+        <div class="res-header">
+          <div class="res-icon" style="background:var(--purple-light);">👥</div>
+          <span class="res-title">Personal network</span>
+          <span class="res-badge" style="background:var(--purple-light); color:var(--purple);">Start here</span>
+        </div>
+        <p class="res-body">Before approaching anyone else, tap your inner circle. Friends and family who believe in you are often the first to help — with funding, introductions, or support.</p>
+        <div class="res-items">
+          <div class="res-item"><div class="res-dot" style="background:var(--purple)"></div>Make a list of people in your network who might invest or connect you to others</div>
+          <div class="res-item"><div class="res-dot" style="background:var(--purple)"></div>Most professional investors want to see some sign of life first — your network can help you get there</div>
+        </div>
+      </div>`;
+
+    cards += `
+      <div class="res-card">
+        <div class="res-header">
+          <div class="res-icon" style="background:var(--green-light);">🏆</div>
+          <span class="res-title">Non-dilutive capital</span>
+          <span class="res-badge" style="background:var(--green-light); color:var(--green);">No equity given up</span>
+        </div>
+        <p class="res-body">Free money that doesn't cost you any ownership. Grants and competitions are globally available — the key is finding the right ones for your industry, location, and stage.</p>
+        <div class="res-items">
+          <div class="res-item"><div class="res-dot" style="background:var(--green)"></div><span><strong>Grants</strong> — nearly $15B is awarded annually in non-dilutive grants</span></div>
+          <div class="res-item"><div class="res-dot" style="background:var(--green)"></div><span><strong>Competitions</strong> — nearly $800M given away each year through pitch competitions</span></div>
+        </div>
+      </div>`;
+
+    if (showInvestors && stage !== 'idea') {
+      let warningHtml = '';
+      if (exit === 'unsure') {
+        warningHtml = `<div class="warning-box">⚠️ <span>Professional investors expect a return through an exit. If you decide not to exit, they won't be a fit. See collateral-based options below as an alternative.</span></div>`;
+      }
+      cards += `
+        <div class="res-card">
+          <div class="res-header">
+            <div class="res-icon" style="background:var(--accent-light);">💼</div>
+            <span class="res-title">Professional investors</span>
+            <span class="res-badge" style="background:var(--accent-light); color:var(--accent);">Exit required</span>
+          </div>
+          <p class="res-body">Now that you have traction, you can approach investors. Build a compelling narrative around why your company will deliver a return — that's what they're evaluating.</p>
+          <div class="res-items">
+            <div class="res-item"><div class="res-dot" style="background:var(--accent)"></div><span><strong>Angel investors</strong> — individuals, groups, and micro funds that provide seed capital</span></div>
+            <div class="res-item"><div class="res-dot" style="background:var(--accent)"></div><span><strong>Venture capital</strong> — funds that deploy capital at seed stage and beyond</span></div>
+          </div>
+          ${warningHtml}
+        </div>`;
+    }
+
+    if (showInvestors && stage === 'idea') {
+      cards += `
+        <div class="res-card muted">
+          <div class="res-header">
+            <div class="res-icon" style="background:var(--gray-light);">💼</div>
+            <span class="res-title">Professional investors</span>
+            <span class="res-badge" style="background:var(--gray-light); color:var(--text-secondary);">Not yet</span>
+          </div>
+          <p class="res-body">Most investors want to see a product and some traction first. Focus on your network and non-dilutive capital, then revisit this once you've built something.</p>
+        </div>`;
+    }
+
+    if (showCollateral) {
+      cards += `
+        <div class="res-card">
+          <div class="res-header">
+            <div class="res-icon" style="background:var(--coral-light);">🏦</div>
+            <span class="res-title">Collateral-based capital</span>
+            <span class="res-badge" style="background:var(--coral-light); color:var(--coral);">No exit needed</span>
+          </div>
+          <p class="res-body">If you have revenue or assets, you can borrow against them — without giving up equity or needing an exit plan.</p>
+          <div class="res-items">
+            <div class="res-item"><div class="res-dot" style="background:var(--coral)"></div><span><strong>Revenue-based loans</strong> — pay back a % of monthly revenue. Popular with SaaS companies.</span></div>
+            <div class="res-item"><div class="res-dot" style="background:var(--coral)"></div><span><strong>Asset-based loans</strong> — borrow against your assets. Common in manufacturing. Also known as invoice factoring in CPG — get paid upfront based on invoice quality.</span></div>
+          </div>
+        </div>`;
+    }
+
+    if (showCollateralIdea) {
+      cards += `
+        <div class="res-card muted">
+          <div class="res-header">
+            <div class="res-icon" style="background:var(--coral-light);">🏦</div>
+            <span class="res-title">Collateral-based capital</span>
+            <span class="res-badge" style="background:var(--gray-light); color:var(--text-secondary);">Later stage</span>
+          </div>
+          <p class="res-body">These options become available once you have revenue or assets to borrow against. Keep this in mind as you grow.</p>
+        </div>`;
+    }
+
+    if (exit === 'no' && stage !== 'revenue') {
+      cards = `<div class="info-box">ℹ️ <span>Since you're not planning an exit, professional investors aren't the right fit — they need a return. Focus on grants, competitions, and collateral-based options as you grow.</span></div>` + cards;
+    }
+
+    return `
+      <span class="wordmark">How to raise capital</span>
+      <p class="results-eyebrow">Your results</p>
+      <h1 class="results-title">Here's where to focus</h1>
+      <p class="results-sub">${stageLabel} · ${exitLabel}</p>
+      ${cards}
+      <div class="cta-block">
+        <p class="cta-title">Get your funding shortlist</p>
+        <p class="cta-sub">Book a free 20-minute call and get a curated list of specific funding sources matched to your stage, industry, and goals.</p>
+        <a class="cta-btn" href="https://calendly.com/lili-2/officehour" target="_blank" rel="noopener">Book a free 20-minute call →</a>
+      </div>
+      <button class="restart-btn" onclick="restart()">↺ Start over</button>`;
+  }
+
+  function restart() {
+    state.step = 1;
+    state.stage = null;
+    state.exit = null;
+    render();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  render();
+</script>
+</body>
+</html>
